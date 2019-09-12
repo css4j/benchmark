@@ -35,7 +35,7 @@ public class CSSOMParseBenchmark {
 		AbstractCSSStyleSheet css = factory.createStyleSheet(null, null);
 		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
 		InputSource source = new InputSource(new InputStreamReader(is, "UTF-8"));
-		css.parseCSSStyleSheet(source);
+		css.parseStyleSheet(source);
 		is.close();
 	}
 
@@ -46,7 +46,7 @@ public class CSSOMParseBenchmark {
 		AbstractCSSStyleSheet css = factory.createStyleSheet(null, null);
 		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
 		InputSource source = new InputSource(new InputStreamReader(is, "UTF-8"));
-		css.parseCSSStyleSheet(source);
+		css.parseStyleSheet(source);
 		is.close();
 	}
 
@@ -57,7 +57,7 @@ public class CSSOMParseBenchmark {
 		AbstractCSSStyleSheet css = factory.createStyleSheet(null, null);
 		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
 		InputSource source = new InputSource(new InputStreamReader(is, "UTF-8"));
-		css.parseCSSStyleSheet(source);
+		css.parseStyleSheet(source);
 		is.close();
 	}
 

@@ -1,6 +1,6 @@
 /*
 
- Copyright (c) 2017-2019, Carlos Amengual.
+ Copyright (c) 2017-2020, Carlos Amengual.
 
  SPDX-License-Identifier: BSD-3-Clause
 
@@ -14,12 +14,13 @@ package io.sf.carte.doc.style.css.mark;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
-import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.InputSource;
+import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactory;
@@ -28,40 +29,38 @@ import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactory;
 @Measurement(iterations = 18)
 public class CSSOMParseBenchmark {
 
-	@Benchmark
-	public void markParseCSSStyleSheet() throws CSSException, IOException {
-		System.setProperty("org.w3c.css.sac.parser", "io.sf.carte.doc.style.css.parser.CSSParser");
-		DOMCSSStyleSheetFactory factory = new DOMCSSStyleSheetFactory();
-		AbstractCSSStyleSheet css = factory.createStyleSheet(null, null);
+	private final static String documentText;
+
+	static {
+		char[] array = new char[4096];
+		StringBuilder buffer = new StringBuilder(array.length);
 		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
-		InputSource source = new InputSource(new InputStreamReader(is, "UTF-8"));
-		css.parseStyleSheet(source);
-		is.close();
+		InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+		int nc;
+		try {
+			while ((nc = reader.read(array)) != -1) {
+				buffer.append(array, 0, nc);
+			}
+		} catch (IOException e) {
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+			}
+		}
+		documentText = buffer.toString();
 	}
 
 	@Benchmark
-	public void markParseCSSStyleSheetSSParser() throws CSSException, IOException {
-		System.setProperty("org.w3c.css.sac.parser", "com.steadystate.css.parser.SACParserCSS3");
+	public void markParseCSSStyleSheet() throws DOMException, IOException {
 		DOMCSSStyleSheetFactory factory = new DOMCSSStyleSheetFactory();
 		AbstractCSSStyleSheet css = factory.createStyleSheet(null, null);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
-		InputSource source = new InputSource(new InputStreamReader(is, "UTF-8"));
-		css.parseStyleSheet(source);
-		is.close();
+		if (!css.parseStyleSheet(new StringReader(documentText))) {
+			throw new DOMException(DOMException.SYNTAX_ERR, "CSS errors.");
+		}
 	}
 
-	@Benchmark
-	public void markParseCSSStyleSheetBatik() throws CSSException, IOException {
-		System.setProperty("org.w3c.css.sac.parser", "org.apache.batik.css.parser.Parser");
-		DOMCSSStyleSheetFactory factory = new DOMCSSStyleSheetFactory();
-		AbstractCSSStyleSheet css = factory.createStyleSheet(null, null);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
-		InputSource source = new InputSource(new InputStreamReader(is, "UTF-8"));
-		css.parseStyleSheet(source);
-		is.close();
-	}
-
-	private InputStream loadFilefromClasspath(final String cssFilename) {
+	private static InputStream loadFilefromClasspath(final String cssFilename) {
 		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
 			@Override
 			public InputStream run() {

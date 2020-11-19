@@ -1,6 +1,6 @@
 /*
 
- Copyright (c) 2017-2019, Carlos Amengual.
+ Copyright (c) 2017-2020, Carlos Amengual.
 
  SPDX-License-Identifier: BSD-3-Clause
 
@@ -18,24 +18,60 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.DocumentHandler;
+import org.w3c.css.sac.CSSParseException;
+import org.w3c.css.sac.ErrorHandler;
 import org.w3c.css.sac.InputSource;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.css.sac.Parser;
-import org.w3c.css.sac.SACMediaList;
-import org.w3c.css.sac.SelectorList;
 
-@Warmup(iterations = 22)
+@Threads(4)
+@Fork(value = 2)
+@Measurement(iterations = 16, time = 10)
+@Warmup(iterations = 5, time = 10)
 public class SACBenchmark {
 
-	private final static String documentText;
+	private final static String documentText = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
 
-	static {
+	@Benchmark
+	public void markSACParseStyleSheet() throws CSSException, IOException {
+		Parser cssParser = new io.sf.carte.doc.style.css.parser.CSSParser();
+		sacBenchmark(cssParser);
+	}
+
+	private void sacBenchmark(Parser cssParser) throws CSSException, IOException {
+		BenchmarkDocumentHandler handler = new BenchmarkDocumentHandler();
+		cssParser.setDocumentHandler(handler);
+		BenchmarkErrorHandler errHandler = new BenchmarkErrorHandler();
+		cssParser.setErrorHandler(errHandler);
+		InputSource source = new InputSource(new StringReader(documentText));
+		cssParser.parseStyleSheet(source);
+		final int expected = 13064;
+		// final int expected = 13066; // small file
+		if (handler.counter != expected ) {
+			throw new RuntimeException("Expected " + expected + ", found " + handler.counter + '.');
+		}
+	}
+
+	@Benchmark
+	public void markSACParseStyleSheetSSParser() throws CSSException, IOException {
+		Parser cssParser = new com.steadystate.css.parser.SACParserCSS3();
+		sacBenchmark(cssParser);
+	}
+
+	@Benchmark
+	public void markSACParseStyleSheetBatik() throws CSSException, IOException {
+		Parser cssParser = new org.apache.batik.css.parser.Parser();
+		sacBenchmark(cssParser);
+	}
+
+	private static String loadFilefromClasspath(final String cssFilename) {
 		char[] array = new char[4096];
 		StringBuilder buffer = new StringBuilder(array.length);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
+		InputStream is = readFilefromClasspath(cssFilename);
 		InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
 		int nc;
 		try {
@@ -49,19 +85,10 @@ public class SACBenchmark {
 			} catch (IOException e) {
 			}
 		}
-		documentText = buffer.toString();
+		return buffer.toString();
 	}
 
-	@Benchmark
-	public void markSACParseStyleSheet() throws CSSException, IOException {
-		Parser cssParser = new io.sf.carte.doc.style.css.parser.CSSParser();
-		DocumentHandler handler = new BenchmarkDocumentHandler();
-		cssParser.setDocumentHandler(handler);
-		InputSource source = new InputSource(new StringReader(documentText));
-		cssParser.parseStyleSheet(source);
-	}
-
-	private static InputStream loadFilefromClasspath(final String cssFilename) {
+	private static InputStream readFilefromClasspath(final String cssFilename) {
 		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
 			@Override
 			public InputStream run() {
@@ -70,85 +97,23 @@ public class SACBenchmark {
 		});
 	}
 
-	static class BenchmarkDocumentHandler implements DocumentHandler {
-
-		// To avoid the effect of possible optimizations, put a counter
-		int counter = 0;
+	private class BenchmarkErrorHandler implements ErrorHandler {
 
 		@Override
-		public void startDocument(InputSource source) throws CSSException {
-			counter++;
+		public void warning(CSSParseException exception) throws CSSException {
 		}
 
 		@Override
-		public void endDocument(InputSource source) throws CSSException {
-			counter++;
+		public void error(CSSParseException exception) throws CSSException {
+			System.err.println("Error at line " + exception.getLineNumber() + " column " + exception.getColumnNumber());
+			throw exception;
 		}
 
 		@Override
-		public void comment(String text) throws CSSException {
-			counter++;
+		public void fatalError(CSSParseException exception) throws CSSException {
+			error(exception);
 		}
-
-		@Override
-		public void ignorableAtRule(String atRule) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void namespaceDeclaration(String prefix, String uri) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void importStyle(String uri, SACMediaList media, String defaultNamespaceURI) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void startMedia(SACMediaList media) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void endMedia(SACMediaList media) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void startPage(String name, String pseudo_page) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void endPage(String name, String pseudo_page) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void startFontFace() throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void endFontFace() throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void startSelector(SelectorList selectors) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void endSelector(SelectorList selectors) throws CSSException {
-			counter++;
-		}
-
-		@Override
-		public void property(String name, LexicalUnit value, boolean important) throws CSSException {
-			counter++;
-		}
-
+		
 	}
+
 }

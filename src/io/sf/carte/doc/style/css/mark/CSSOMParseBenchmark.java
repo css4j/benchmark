@@ -20,14 +20,18 @@ import java.nio.charset.StandardCharsets;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.InputSource;
 
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactory;
 
-@Fork(value = 2, warmups = 2)
-@Measurement(iterations = 18)
+@Threads(4)
+@Fork(value = 2)
+@Measurement(iterations = 16, time = 10)
+@Warmup(iterations = 5, time = 10)
 public class CSSOMParseBenchmark {
 
 	private final static String documentText;

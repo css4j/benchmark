@@ -50,7 +50,7 @@ public class SACBenchmark {
 		InputSource source = new InputSource(new StringReader(documentText));
 		cssParser.parseStyleSheet(source);
 		final int expected = 13064;
-		// final int expected = 13066; // small file
+		// final int expected = 632; // small file
 		if (handler.counter != expected ) {
 			throw new RuntimeException("Expected " + expected + ", found " + handler.counter + '.');
 		}

@@ -105,8 +105,8 @@ public class SACBenchmark {
 
 		@Override
 		public void error(CSSParseException exception) throws CSSException {
-			System.err.println("Error at line " + exception.getLineNumber() + " column " + exception.getColumnNumber());
-			throw exception;
+			throw new RuntimeException(
+					"Error at line " + exception.getLineNumber() + " column " + exception.getColumnNumber(), exception);
 		}
 
 		@Override

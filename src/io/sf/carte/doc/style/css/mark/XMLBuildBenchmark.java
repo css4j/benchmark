@@ -43,7 +43,7 @@ import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 @Threads(4)
 @Fork(value = 2)
 @Measurement(iterations = 16, time = 10)
-@Warmup(iterations = 8, time = 10)
+@Warmup(iterations = 6, time = 10)
 public class XMLBuildBenchmark {
 
 	private static DefaultEntityResolver entityResolver = new DefaultEntityResolver();

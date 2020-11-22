@@ -12,10 +12,7 @@
 package io.sf.carte.doc.style.css.mark;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
@@ -38,27 +35,7 @@ import nu.validator.htmlparser.dom.HtmlDocumentBuilder;
 @Warmup(iterations = 8, time = 10)
 public class HTMLBuildBenchmark {
 
-	private final static String documentText;
-
-	static {
-		char[] array = new char[4096];
-		StringBuilder buffer = new StringBuilder(array.length);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/usage.html");
-		InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-		int nc;
-		try {
-			while ((nc = reader.read(array)) != -1) {
-				buffer.append(array, 0, nc);
-			}
-		} catch (IOException e) {
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-			}
-		}
-		documentText = buffer.toString();
-	}
+	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/usage.html");
 
 	@Benchmark
 	public void markBuildPlainJDK() throws Exception {
@@ -94,15 +71,6 @@ public class HTMLBuildBenchmark {
 		if (doc == null) {
 			throw new RuntimeException();
 		}
-	}
-
-	private static InputStream loadFilefromClasspath(final String cssFilename) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
-			@Override
-			public InputStream run() {
-				return getClass().getResourceAsStream(cssFilename);
-			}
-		});
 	}
 
 }

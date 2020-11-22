@@ -12,10 +12,7 @@
 package io.sf.carte.doc.style.css.mark;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Warmup;
@@ -32,27 +29,7 @@ import io.sf.carte.doc.style.css.nsac.SelectorList;
 @Warmup(iterations = 22)
 public class NSACBenchmark {
 
-	private final static String documentText;
-
-	static {
-		char[] array = new char[4096];
-		StringBuilder buffer = new StringBuilder(array.length);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
-		InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-		int nc;
-		try {
-			while ((nc = reader.read(array)) != -1) {
-				buffer.append(array, 0, nc);
-			}
-		} catch (IOException e) {
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-			}
-		}
-		documentText = buffer.toString();
-	}
+	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
 
 	@Benchmark
 	public void markSACParseStyleSheet() throws IOException {
@@ -60,15 +37,6 @@ public class NSACBenchmark {
 		BenchmarkDocumentHandler handler = new BenchmarkDocumentHandler();
 		cssParser.setDocumentHandler(handler);
 		cssParser.parseStyleSheet(new StringReader(documentText));
-	}
-
-	private static InputStream loadFilefromClasspath(final String cssFilename) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
-			@Override
-			public InputStream run() {
-				return getClass().getResourceAsStream(cssFilename);
-			}
-		});
 	}
 
 	static class BenchmarkDocumentHandler implements CSSHandler {

@@ -12,10 +12,7 @@
 package io.sf.carte.doc.style.css.mark;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -47,27 +44,7 @@ public class XMLBuildSmallBenchmark {
 
 	private static DefaultEntityResolver entityResolver = new DefaultEntityResolver();
 
-	private final static String documentText;
-
-	static {
-		char[] array = new char[4096];
-		StringBuilder buffer = new StringBuilder(array.length);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/xhtml1.xml");
-		InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-		int nc;
-		try {
-			while ((nc = reader.read(array)) != -1) {
-				buffer.append(array, 0, nc);
-			}
-		} catch (IOException e) {
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-			}
-		}
-		documentText = buffer.toString();
-	}
+	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/xhtml1.xml");
 
 	@Benchmark
 	public void markBuildPlainJdk() throws IOException, SAXException, ParserConfigurationException {
@@ -139,15 +116,6 @@ public class XMLBuildSmallBenchmark {
 		if (doc == null) {
 			throw new RuntimeException();
 		}
-	}
-
-	private static InputStream loadFilefromClasspath(final String cssFilename) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
-			@Override
-			public InputStream run() {
-				return getClass().getResourceAsStream(cssFilename);
-			}
-		});
 	}
 
 }

@@ -40,7 +40,7 @@ public class HTMLBuildBenchmark {
 	@Benchmark
 	public void markBuildPlainJDK() throws Exception {
 		DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
-		DOMImplementation domImpl = registry.getDOMImplementation("XML 3.0");
+		DOMImplementation domImpl = registry.getDOMImplementation("XML 3.0 traversal");
 		HtmlDocumentBuilder docbuilder = new HtmlDocumentBuilder(domImpl);
 		docbuilder.setIgnoringComments(false);
 		InputSource source = new InputSource(new StringReader(documentText));

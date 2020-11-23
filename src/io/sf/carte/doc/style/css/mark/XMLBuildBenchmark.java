@@ -27,7 +27,9 @@ import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -56,6 +58,30 @@ public class XMLBuildBenchmark {
 		factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		DocumentBuilder docbuilder = factory.newDocumentBuilder();
 		docbuilder.setEntityResolver(entityResolver);
+		InputSource source = new InputSource(new StringReader(documentText));
+		Document doc = docbuilder.parse(source);
+		if (doc == null) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Benchmark
+	public void markBuildJdk() throws IOException, SAXException, ParserConfigurationException {
+		DOMImplementationRegistry registry = null;
+		try {
+			registry = DOMImplementationRegistry.newInstance();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException e) {
+		}
+		DOMImplementation domImpl = registry.getDOMImplementation("XML 3.0 traversal");
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		factory.setNamespaceAware(true);
+		factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+		factory.setFeature("http://xml.org/sax/features/xmlns-uris", true);
+		factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		XMLDocumentBuilder docbuilder = new XMLDocumentBuilder(domImpl, factory);
+		docbuilder.setEntityResolver(new DefaultEntityResolver());
 		InputSource source = new InputSource(new StringReader(documentText));
 		Document doc = docbuilder.parse(source);
 		if (doc == null) {

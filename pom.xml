@@ -128,12 +128,6 @@
 		<resources>
 			<resource>
 				<directory>${project.basedir}/resources</directory>
-				<includes>
-					<include>**/*.css</include>
-					<include>**/*.xml</include>
-					<include>**/*.html</include>
-					<include>**/*.gz</include>
-				</includes>
 			</resource>
 		</resources>
 	</build>

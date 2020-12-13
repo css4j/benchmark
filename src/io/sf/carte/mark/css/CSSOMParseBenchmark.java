@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.css;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -21,12 +21,13 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactory;
+import io.sf.carte.mark.Util;
 
 @Fork(value = 2, warmups = 2)
 @Measurement(iterations = 18)
 public class CSSOMParseBenchmark {
 
-	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
+	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/mark/css/sample.css");
 
 	@Benchmark
 	public void markParseCSSStyleSheet() throws DOMException, IOException {

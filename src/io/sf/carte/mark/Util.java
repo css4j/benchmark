@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +17,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 
-class Util {
+public class Util {
 
-	static String loadFilefromClasspath(final String cssFilename) {
+	public static String loadFilefromClasspath(final String cssFilename) {
 		char[] array = new char[4096];
 		StringBuilder buffer = new StringBuilder(array.length);
 		InputStream is = readFilefromClasspath(cssFilename);
@@ -48,7 +48,7 @@ class Util {
 		});
 	}
 
-	static String loadCompressedFilefromClasspath(final String cssFilename) {
+	public static String loadCompressedFilefromClasspath(final String cssFilename) {
 		char[] array = new char[4096];
 		StringBuilder buffer = new StringBuilder(array.length);
 		InputStream is = readCompressedFilefromClasspath(cssFilename);

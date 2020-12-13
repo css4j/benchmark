@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.css;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -25,11 +25,12 @@ import io.sf.carte.doc.style.css.nsac.PageSelectorList;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.nsac.ParserControl;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
+import io.sf.carte.mark.Util;
 
 @Warmup(iterations = 22)
 public class NSACBenchmark {
 
-	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
+	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/mark/css/sample.css");
 
 	@Benchmark
 	public void markSACParseStyleSheet() throws IOException {

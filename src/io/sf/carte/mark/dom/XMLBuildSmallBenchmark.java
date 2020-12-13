@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.dom;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -37,17 +37,17 @@ import io.sf.carte.doc.dom.CSSDOMImplementation;
 import io.sf.carte.doc.dom.XMLDocumentBuilder;
 import io.sf.carte.doc.dom4j.XHTMLDocumentFactory;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
+import io.sf.carte.mark.Util;
 
 @Threads(4)
 @Fork(value = 2)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)
-public class XMLBuildBenchmark {
+public class XMLBuildSmallBenchmark {
 
 	private static DefaultEntityResolver entityResolver = new DefaultEntityResolver();
 
-	private final static String documentText = Util
-			.loadCompressedFilefromClasspath("/io/sf/carte/doc/style/css/mark/mondial-3.0.xml.gz");
+	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/mark/dom/xhtml1.xml");
 
 	@Benchmark
 	public void markBuildPlainJdk() throws IOException, SAXException, ParserConfigurationException {

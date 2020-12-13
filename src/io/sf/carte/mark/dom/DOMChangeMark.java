@@ -9,8 +9,10 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.dom;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.TextNode;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
@@ -73,6 +75,28 @@ public class DOMChangeMark {
 		for (int i = 0; i < 20000; i++) {
 			Node element = root.getFirstChild();
 			root.removeChild(element);
+		}
+	}
+
+	@Benchmark
+	public void markChangeJsoup() {
+		org.jsoup.nodes.Document doc = Jsoup.parse("<html><body></body></html>");
+		org.jsoup.nodes.Element body = doc.body();
+		if (body == null) {
+			throw new IllegalStateException("Document has no body.");
+		}
+		//
+		for (int i = 0; i < 20000; i++) {
+			org.jsoup.nodes.Element element = doc.createElement("element");
+			element.attr("foo", "bar");
+			TextNode text = TextNode.createFromEncoded("text");
+			element.appendChild(text);
+			body.appendChild(element);
+		}
+		//
+		for (int i = 0; i < 20000; i++) {
+			org.jsoup.nodes.Element element = body.child(0);
+			element.remove();
 		}
 	}
 

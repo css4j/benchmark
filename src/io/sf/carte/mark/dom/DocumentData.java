@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.dom;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -20,10 +20,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
-import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
@@ -37,17 +33,21 @@ import io.sf.carte.doc.dom.CSSDOMImplementation;
 import io.sf.carte.doc.dom.XMLDocumentBuilder;
 import io.sf.carte.doc.dom4j.XHTMLDocumentFactory;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
+import io.sf.carte.mark.Util;
 
-@State(Scope.Benchmark)
-public class DOMData {
+public class DocumentData {
 
-	static final int minimumCount = 57369;
+	final int minimumCount;
 
-	static final int cityCount = 3152;
+	final String tagName;
 
-	static final int elementCount = 22422;
+	final int nameCount;
 
-	private final String filename = "/io/sf/carte/doc/style/css/mark/mondial-3.0.xml.gz";
+	final int elementCount;
+
+	private final String filename;
+
+	private final boolean compressed;
 
 	Document jdkDoc;
 
@@ -55,10 +55,29 @@ public class DOMData {
 
 	Document dom4jDoc;
 
-	@Setup(Level.Trial)
+	DocumentData(String filename, boolean compressed, int minimumCount, int elementCount, String tagName,
+			int nameCount) {
+		super();
+		this.filename = filename;
+		this.compressed = compressed;
+		this.tagName = tagName;
+		this.minimumCount = minimumCount;
+		this.elementCount = elementCount;
+		this.nameCount = nameCount;
+	}
+
+	public String getTagName() {
+		return tagName;
+	}
+
 	public void init() {
 		DefaultEntityResolver entityResolver = new DefaultEntityResolver();
-		final String documentText = Util.loadCompressedFilefromClasspath(filename);
+		final String documentText;
+		if (compressed) {
+			documentText = Util.loadCompressedFilefromClasspath(filename);
+		} else {
+			documentText = Util.loadFilefromClasspath(filename);
+		}
 		jdkDoc = loadJdkDocument(documentText, entityResolver);
 		dom4jDoc = loadDOM4JDocument(documentText, entityResolver);
 		domDoc = loadDOMDocument(documentText, entityResolver);

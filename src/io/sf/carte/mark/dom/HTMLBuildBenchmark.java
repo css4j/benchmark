@@ -14,6 +14,9 @@ package io.sf.carte.mark.dom;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.dom4j.DocumentException;
+import org.dom4j.dom.DOMDocumentFactory;
+import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
@@ -23,6 +26,7 @@ import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -75,6 +79,7 @@ public class HTMLBuildBenchmark {
 		parser.setCommentPolicy(XmlViolationPolicy.ALLOW);
 		parser.setXmlnsPolicy(XmlViolationPolicy.ALLOW);
 		XMLDocumentBuilder docbuilder = new XMLDocumentBuilder(domImpl);
+		docbuilder.setHTMLProcessing(true);
 		docbuilder.setXMLReader(parser);
 		InputSource source = new InputSource(new StringReader(documentText));
 		Document doc = docbuilder.parse(source);
@@ -89,6 +94,22 @@ public class HTMLBuildBenchmark {
 		docbuilder.setIgnoringComments(false);
 		InputSource source = new InputSource(new StringReader(documentText));
 		Document doc = docbuilder.parse(source);
+		if (doc == null) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Benchmark
+	public void markBuildDOM4J() throws IOException, DocumentException {
+		HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
+		parser.setReportingDoctype(true);
+		parser.setCommentPolicy(XmlViolationPolicy.ALLOW);
+		parser.setXmlnsPolicy(XmlViolationPolicy.ALLOW);
+		SAXReader docbuilder = new SAXReader(DOMDocumentFactory.getInstance());
+		docbuilder.setXMLReader(parser);
+		ErrorHandler errorHandler = new PermissiveErrorHandler();
+		docbuilder.setErrorHandler(errorHandler);
+		Document doc = (Document) docbuilder.read(new StringReader(documentText));
 		if (doc == null) {
 			throw new RuntimeException();
 		}

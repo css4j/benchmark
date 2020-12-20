@@ -75,7 +75,6 @@ public class HTMLBuildBenchmark {
 	public void markBuildDOMXHTMLBuilder() throws IOException, SAXException {
 		CSSDOMImplementation domImpl = new CSSDOMImplementation();
 		HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
-		parser.setReportingDoctype(true);
 		parser.setCommentPolicy(XmlViolationPolicy.ALLOW);
 		parser.setXmlnsPolicy(XmlViolationPolicy.ALLOW);
 		XMLDocumentBuilder docbuilder = new XMLDocumentBuilder(domImpl);
@@ -102,7 +101,6 @@ public class HTMLBuildBenchmark {
 	@Benchmark
 	public void markBuildDOM4J() throws IOException, DocumentException {
 		HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
-		parser.setReportingDoctype(true);
 		parser.setCommentPolicy(XmlViolationPolicy.ALLOW);
 		parser.setXmlnsPolicy(XmlViolationPolicy.ALLOW);
 		SAXReader docbuilder = new SAXReader(DOMDocumentFactory.getInstance());

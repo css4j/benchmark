@@ -207,7 +207,7 @@ public class DOMIteratorSmallMark {
 	@Benchmark
 	public void markElementIteratorJsoup(DOMDataSmall data) {
 		int count = iterateJsoupElements(data.jsoupDoc.children(), 0);
-		if (count != data.elementCount) {
+		if (count != data.elementCount + 3) {
 			throw new IllegalStateException("Expected a count of " + data.elementCount + ", obtained " + count);
 		}
 	}

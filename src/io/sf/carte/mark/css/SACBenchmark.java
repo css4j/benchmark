@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.css;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +34,7 @@ import org.w3c.css.sac.Parser;
 @Warmup(iterations = 5, time = 10)
 public class SACBenchmark {
 
-	private final static String documentText = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
+	private final static String documentText = loadFilefromClasspath("/io/sf/carte/mark/css/sample.css");
 
 	@Benchmark
 	public void markSACParseStyleSheet() throws CSSException, IOException {
@@ -113,7 +113,7 @@ public class SACBenchmark {
 		public void fatalError(CSSParseException exception) throws CSSException {
 			error(exception);
 		}
-		
+
 	}
 
 }

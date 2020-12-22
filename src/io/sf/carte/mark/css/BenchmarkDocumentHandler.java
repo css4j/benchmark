@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.css;
 
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.DocumentHandler;

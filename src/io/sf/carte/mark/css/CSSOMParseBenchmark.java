@@ -9,7 +9,7 @@
 
  */
 
-package io.sf.carte.doc.style.css.mark;
+package io.sf.carte.mark.css;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +39,7 @@ public class CSSOMParseBenchmark {
 	static {
 		char[] array = new char[4096];
 		StringBuilder buffer = new StringBuilder(array.length);
-		InputStream is = loadFilefromClasspath("/io/sf/carte/doc/style/css/mark/sample.css");
+		InputStream is = loadFilefromClasspath("/io/sf/carte/mark/css/sample.css");
 		InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
 		int nc;
 		try {

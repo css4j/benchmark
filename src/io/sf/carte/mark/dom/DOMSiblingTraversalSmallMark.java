@@ -22,10 +22,10 @@ import org.w3c.dom.Node;
 @Fork(value = 2)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)
-public class DOMTraverseMark {
+public class DOMSiblingTraversalSmallMark {
 
 	@Benchmark
-	public void markTraverseJdk(DOMData data) {
+	public void markTraverseJdk(DOMDataSmall data) {
 		Node node = data.jdkDoc.getDocumentElement();
 		if (node == null) {
 			throw new IllegalStateException("Document has no element child.");
@@ -37,7 +37,7 @@ public class DOMTraverseMark {
 	}
 
 	@Benchmark
-	public void markTraverseDOM(DOMData data) {
+	public void markTraverseDOM(DOMDataSmall data) {
 		int count = traverse(data.domDoc.getDocumentElement(), 0);
 		if (count < data.minimumCount) {
 			throw new IllegalStateException("Expected a count of " + data.minimumCount + " obtained " + count);
@@ -45,7 +45,7 @@ public class DOMTraverseMark {
 	}
 
 	@Benchmark
-	public void markTraverseDOM4J(DOMData data) {
+	public void markTraverseDOM4J(DOMDataSmall data) {
 		int count = traverse(data.dom4jDoc.getDocumentElement(), 0);
 		if (count < data.minimumCount) {
 			throw new IllegalStateException("Expected a count of " + data.minimumCount + " obtained " + count);
@@ -63,7 +63,7 @@ public class DOMTraverseMark {
 	}
 
 	@Benchmark
-	public void markTraversePrevJdk(DOMData data) {
+	public void markTraversePrevJdk(DOMDataSmall data) {
 		Node node = data.jdkDoc.getDocumentElement();
 		if (node == null) {
 			throw new IllegalStateException("Document has no element child.");
@@ -75,7 +75,7 @@ public class DOMTraverseMark {
 	}
 
 	@Benchmark
-	public void markTraversePrevDOM(DOMData data) {
+	public void markTraversePrevDOM(DOMDataSmall data) {
 		int count = traversePrev(data.domDoc.getDocumentElement(), 0);
 		if (count < data.minimumCount) {
 			throw new IllegalStateException("Expected a count of " + data.minimumCount + " obtained " + count);
@@ -83,7 +83,7 @@ public class DOMTraverseMark {
 	}
 
 	@Benchmark
-	public void markTraversePrevDOM4J(DOMData data) {
+	public void markTraversePrevDOM4J(DOMDataSmall data) {
 		int count = traversePrev(data.dom4jDoc.getDocumentElement(), 0);
 		if (count < data.minimumCount) {
 			throw new IllegalStateException("Expected a count of " + data.minimumCount + " obtained " + count);

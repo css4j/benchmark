@@ -158,7 +158,9 @@ public class DOMIteratorSmallMark {
 			while (it.hasNext()) {
 				org.dom4j.Node child = it.next();
 				count++;
-				count = iterateDOM4J((Branch) child, count);
+				if (child instanceof Branch) {
+					count = iterateDOM4J((Branch) child, count);
+				}
 			}
 		}
 		return count;

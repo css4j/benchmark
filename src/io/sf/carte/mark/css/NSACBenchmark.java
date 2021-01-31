@@ -196,7 +196,7 @@ public class NSACBenchmark {
 		}
 
 		@Override
-		public void property(String name, LexicalUnit value, boolean important, int index) {
+		public void property(String name, LexicalUnit value, boolean important) {
 			counter++;
 		}
 

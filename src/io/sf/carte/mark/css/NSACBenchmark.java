@@ -186,6 +186,16 @@ public class NSACBenchmark {
 		}
 
 		@Override
+		public void startProperty(String name) {
+			counter++;
+		}
+
+		@Override
+		public void endProperty(boolean discard) {
+			counter++;
+		}
+
+		@Override
 		public void startViewport() {
 			counter++;
 		}
@@ -197,6 +207,11 @@ public class NSACBenchmark {
 
 		@Override
 		public void property(String name, LexicalUnit value, boolean important) {
+			counter++;
+		}
+
+		@Override
+		public void lexicalProperty(String propertyName, LexicalUnit lunit, boolean important) {
 			counter++;
 		}
 

@@ -1,0 +1,189 @@
+plugins {
+	id 'java'
+	id 'maven-publish'
+}
+
+repositories {
+	maven {
+		url = uri('https://repo.maven.apache.org/maven2/')
+	}
+	maven {
+		url "https://css4j.github.io/maven/"
+		mavenContent {
+			releasesOnly()
+		}
+		content {
+			includeGroup 'io.sf.carte'
+			includeGroup 'io.sf.jclf'
+		}
+	}
+}
+
+dependencies {
+	annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.32'
+	implementation 'org.openjdk.jmh:jmh-core:1.32'
+	implementation 'io.sf.carte:xml-dtd:3.5.1'
+	implementation 'io.sf.carte:css4j:3.6.0'
+	implementation(group: 'io.sf.carte', name: 'css4j', version: '3.6.0', classifier: 'tests')
+	implementation 'io.sf.carte:css4j-dom4j:3.6.0'
+	implementation 'nu.validator:htmlparser:1.4.16'
+	implementation 'org.jsoup:jsoup:1.14.2'
+}
+
+group = 'io.sf.carte'
+version = '0.6'
+description = 'JMH benchmark for CSS4J'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src']
+		}
+		resources {
+			srcDirs = ['resources']
+		}
+	}
+}
+
+tasks.register('lineEndingConversion', CRLFConvert) {
+	file "$rootDir/LICENSE.txt"
+}
+
+tasks.withType(Javadoc) {
+	failOnError false
+	options.addStringOption('Xdoclint:none', '-quiet')
+	options.addStringOption('encoding', 'UTF-8')
+	options.addStringOption('charset', 'UTF-8')
+	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+	// Reproducible build
+	preserveFileTimestamps = false
+	reproducibleFileOrder = true
+	// Copy license file
+	dependsOn lineEndingConversion
+	from ('LICENSE.txt') {
+		into 'META-INF'
+	}
+}
+
+tasks.register('cleanBuildSrc') {
+	doLast {
+		delete("$rootDir/buildSrc/build")
+	}
+}
+
+tasks.named('clean') {
+	finalizedBy('cleanBuildSrc')
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+// Execute JMH benchmarks
+task runJmh(type: JavaExec) {
+	description = 'Run JMH benchmarks'
+	dependsOn classes
+
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = 'org.openjdk.jmh.Main'
+
+	def regexp = project.properties.get('jmh.regexp', 'Mark');
+	def format = project.properties.get('jmh.rf', 'json');
+	def resultFilename = project.properties.get('jmh.rff', "jmh-result.${format}");
+	def resultFile = file("${buildDir}/reports/jmh/${resultFilename}")
+
+	args regexp
+	args '-rf', format
+	args '-rff', resultFile
+	jvmArgs '-Dfile.encoding=UTF-8'
+
+	doFirst {
+		resultFile.parentFile.mkdirs()
+	}
+}
+
+//create a single Jar with all benchmark dependencies
+tasks.register('jmhJar', Jar) {
+	description = 'Create a single benchmark Jar with dependencies'
+	archiveFileName = 'benchmarks.jar'
+	manifest {
+		attributes(
+			'Main-Class' : 'org.openjdk.jmh.Main'
+		)
+	}
+	dependsOn configurations.compileClasspath
+	dependsOn configurations.runtimeClasspath
+	doFirst {
+		from sourceSets.main.output
+		from {
+			configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		}
+		from {
+			configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+		}
+	}
+	with jar
+	duplicatesStrategy = 'exclude'
+	exclude 'module-info.class'
+}
+
+build.dependsOn jmhJar
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			description = 'css4j benchmarks'
+			from(components.java)
+			pom {
+				description = 'css4j benchmarks'
+				url = "https://github.com/css4j/benchmark/"
+				licenses {
+					license {
+						name = "BSD 3-clause license"
+						url = "https://css4j.github.io/LICENSE.txt"
+					}
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			name = 'mavenRepo'
+			/*
+			 * The following section applies to the 'publish' task:
+			 *
+			 * If you plan to deploy to a repository, please configure the
+			 * 'mavenReleaseRepoUrl' and/or 'mavenSnapshotRepoUrl' properties
+			 * (for example in GRADLE_USER_HOME/gradle.properties).
+			 *
+			 * Otherwise, Gradle shall create a 'build/repository' subdirectory
+			 * at ${rootDir} and deploy there.
+			 *
+			 * Properties 'mavenRepoUsername' and 'mavenRepoPassword' can also
+			 * be set (generally from command line).
+			 */
+			def releasesUrl
+			def snapshotsUrl
+			if (project.hasProperty('mavenReleaseRepoUrl') && project.mavenReleaseRepoUrl) {
+				releasesUrl = mavenReleaseRepoUrl
+			} else {
+				releasesUrl = "${buildDir}/repository/releases"
+			}
+			if (project.hasProperty('mavenSnapshotRepoUrl') && project.mavenSnapshotRepoUrl) {
+				snapshotsUrl = mavenSnapshotRepoUrl
+			} else {
+				snapshotsUrl = "${buildDir}/repository/snapshots"
+			}
+			url = version.endsWith('-SNAPSHOT') ? snapshotsUrl : releasesUrl
+			if (project.hasProperty('mavenRepoUsername') &&
+					project.hasProperty('mavenRepoPassword')) {
+				credentials.username = mavenRepoUsername
+				credentials.password = mavenRepoPassword
+			}
+		}
+	}
+}

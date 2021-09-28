@@ -1,6 +1,6 @@
 # DOM / SAC / CSSOM Benchmarks
 
-You can build and run the benchmarks in this repository with either Maven or Gradle:
+You can build and run the benchmarks in this repository with either Maven or Gradle, Java 11 or later is required:
 
 ## Gradle
 First, produce the benchmarks jar file, then run the required benchmark(s):

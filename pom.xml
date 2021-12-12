@@ -23,14 +23,14 @@
 		 <dependency>
 			<groupId>io.sf.carte</groupId>
 			<artifactId>xml-dtd</artifactId>
-			<version>3.5.1</version>
+			<version>4.0.0</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		 <dependency>
 			<groupId>io.sf.carte</groupId>
 			<artifactId>css4j-dom4j</artifactId>
-			<version>3.6.0</version>
+			<version>3.6.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -56,21 +56,29 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.14.2</version>
+			<version>1.14.3</version>
 		</dependency>
 	</dependencies>
+	<!-- Configure CSS4J repository -->
+	<repositories>
+		<repository>
+		<id>css4j</id>
+		<name>CSS4J repository</name>
+		<url>https://css4j.github.io/maven/</url>
+		</repository>
+	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!--
 			CSS4J version to use with this project.
 		  -->
-		<css4j.version>3.6.0</css4j.version>
+		<css4j.version>3.7.0</css4j.version>
 
 		<!--
 			JMH version to use with this project.
 		  -->
-		<jmh.version>1.32</jmh.version>
+		<jmh.version>1.33</jmh.version>
 
 		<!--
 			Java version to use for compilation.

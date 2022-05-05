@@ -92,7 +92,7 @@
 	</properties>
 	<build>
 		<defaultGoal>clean package</defaultGoal>
-		<directory>${project.basedir}/build</directory>
+		<directory>${project.basedir}/buildMaven</directory>
 		<outputDirectory>${project.build.directory}/bin</outputDirectory>
 		<sourceDirectory>${project.basedir}/src</sourceDirectory>
 		<finalName>${project.artifactId}-${project.version}</finalName>

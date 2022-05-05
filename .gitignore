@@ -16,7 +16,10 @@
 *.iml
 *.iws
 
-# Gradle & Maven
+# Gradle
 **/.gradle
 /build/
 /buildSrc/build/
+
+# Maven
+/buildMaven/

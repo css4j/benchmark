@@ -19,3 +19,4 @@
 
 # Maven
 /build/
+/dependency-reduced-pom.xml

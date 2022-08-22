@@ -1,5 +1,6 @@
 * text=auto
 *.java text
+*.bat text eol=crlf
 *.properties text
 *.css text
 *.html text
@@ -9,5 +10,6 @@
 *.txt text
 *.sh text
 *.xml text
+*.jar binary
 *.png binary
 

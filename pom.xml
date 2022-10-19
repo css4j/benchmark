@@ -30,7 +30,7 @@
 		 <dependency>
 			<groupId>io.sf.carte</groupId>
 			<artifactId>css4j-dom4j</artifactId>
-			<version>3.8.0</version>
+			<version>3.9.0</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -73,7 +73,7 @@
 		<!--
 			CSS4J version to use with this project.
 		  -->
-		<css4j.version>3.8.0</css4j.version>
+		<css4j.version>3.9.0</css4j.version>
 
 		<!--
 			JMH version to use with this project.

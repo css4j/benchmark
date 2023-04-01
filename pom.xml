@@ -73,7 +73,7 @@
 		<!--
 			CSS4J version to use with this project.
 		  -->
-		<css4j.version>3.9.1</css4j.version>
+		<css4j.version>4.0</css4j.version>
 
 		<!--
 			JMH version to use with this project.

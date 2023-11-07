@@ -22,9 +22,9 @@ repositories {
 dependencies {
 	annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.36'
 	implementation 'org.openjdk.jmh:jmh-core:1.36'
-	implementation 'io.sf.carte:xml-dtd:4.2'
-	implementation 'io.sf.carte:css4j:4.1'
-	implementation(group: 'io.sf.carte', name: 'css4j', version: '4.1', classifier: 'tests')
+	implementation 'io.sf.carte:xml-dtd:4.2.1'
+	implementation 'io.sf.carte:css4j:4.2.1'
+	implementation(group: 'io.sf.carte', name: 'css4j', version: '4.2.1', classifier: 'tests')
 	implementation 'io.sf.carte:css4j-dom4j:4.0'
 	implementation 'nu.validator:htmlparser:1.4.16'
 	implementation 'org.jsoup:jsoup:1.16.1'

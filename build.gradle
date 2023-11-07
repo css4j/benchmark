@@ -20,8 +20,8 @@ repositories {
 }
 
 dependencies {
-	annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.36'
-	implementation 'org.openjdk.jmh:jmh-core:1.36'
+	annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
+	implementation 'org.openjdk.jmh:jmh-core:1.37'
 	implementation 'io.sf.carte:xml-dtd:4.2.1'
 	implementation 'io.sf.carte:css4j:4.2.1'
 	implementation(group: 'io.sf.carte', name: 'css4j', version: '4.2.1', classifier: 'tests')

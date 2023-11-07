@@ -27,7 +27,7 @@ dependencies {
 	implementation(group: 'io.sf.carte', name: 'css4j', version: '4.2.1', classifier: 'tests')
 	implementation 'io.sf.carte:css4j-dom4j:4.0'
 	implementation 'nu.validator:htmlparser:1.4.16'
-	implementation 'org.jsoup:jsoup:1.16.1'
+	implementation 'org.jsoup:jsoup:1.16.2'
 }
 
 group = 'io.sf.carte'

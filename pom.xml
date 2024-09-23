@@ -48,6 +48,24 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>io.sf.carte</groupId>
+			<artifactId>echosvg-transcoder</artifactId>
+			<version>1.2.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-transcoder</artifactId>
+			<version>1.17</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-codec</artifactId>
+			<version>1.17</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>nu.validator</groupId>
 			<artifactId>htmlparser</artifactId>
 			<version>[1.4,1.5)</version>
@@ -122,6 +140,12 @@
 									<mainClass>org.openjdk.jmh.Main</mainClass>
 								</transformer>
 							</transformers>
+							<artifactSet>
+								<excludes>
+									<exclude>*:xml-apis</exclude>
+									<exclude>*:xml-apis-ext</exclude>
+								</excludes>
+							</artifactSet>
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
@@ -130,6 +154,8 @@
 										<exclude>overview.html</exclude>
 										<exclude>META-INF/*.txt</exclude>
 										<exclude>META-INF/*.MF</exclude>
+										<exclude>META-INF/LICENSE</exclude>
+										<exclude>META-INF/NOTICE</exclude>
 										<!--
 							Shading signed JARs will fail without this.
 							http://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar
@@ -137,6 +163,12 @@
 										<exclude>META-INF/*.SF</exclude>
 										<exclude>META-INF/*.DSA</exclude>
 										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+								<filter>
+									<artifact>org.apache.xmlgraphics:batik-script</artifact>
+									<excludes>
+										<exclude>META-INF/imports/*.txt</exclude>
 									</excludes>
 								</filter>
 							</filters>

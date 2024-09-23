@@ -1,4 +1,4 @@
-# DOM / SAC / CSSOM Benchmarks
+# DOM / SAC / CSSOM / SVG Benchmarks
 
 You can build and run the benchmarks in this repository with either Maven or Gradle, Java 11 or later is required:
 

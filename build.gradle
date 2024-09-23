@@ -1,3 +1,14 @@
+/*
+
+ Copyright (c) 2019-2024, C. Amengual.
+
+ Licensed under a BSD-style License. You can find the license here:
+ https://css4j.github.io/LICENSE.txt
+
+ */
+
+// SPDX-License-Identifier: BSD-3-Clause
+
 plugins {
 	id 'java'
 	id 'maven-publish'
@@ -13,8 +24,7 @@ repositories {
 			releasesOnly()
 		}
 		content {
-			includeGroup 'io.sf.carte'
-			includeGroup 'io.sf.jclf'
+			includeGroupByRegex 'io\\.sf\\..*'
 		}
 	}
 }
@@ -26,13 +36,16 @@ dependencies {
 	implementation 'io.sf.carte:css4j:4.4'
 	implementation(group: 'io.sf.carte', name: 'css4j', version: '4.4', classifier: 'tests')
 	implementation 'io.sf.carte:css4j-dom4j:4.2'
+	implementation 'io.sf.carte:echosvg-transcoder:1.2.2'
+	implementation 'org.apache.xmlgraphics:batik-transcoder:1.17'
+	implementation 'org.apache.xmlgraphics:batik-codec:1.17'
 	implementation 'nu.validator:htmlparser:1.4.16'
 	implementation 'org.jsoup:jsoup:1.17.1'
 }
 
 group = 'io.sf.carte'
 version = '0.6'
-description = 'JMH benchmark for CSS4J'
+description = 'JMH benchmark for CSS4J and EchoSVG'
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 sourceSets {

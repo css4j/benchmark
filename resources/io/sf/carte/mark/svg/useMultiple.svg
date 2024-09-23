@@ -1,0 +1,105 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ========================================================================= -->
+<!-- Multiple use                                                              -->
+<!--                                                                           -->
+<!-- @version $Id$ -->
+<!-- ========================================================================= -->
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="500" viewBox="0 0 450 500">
+  <title>Multiple &lt;use></title>
+
+  <!-- ============================================================= -->
+  <!-- Test content                                                  -->
+  <!-- ============================================================= -->
+  <g id="testContent">
+    <text x="225" y="50" class="title">Multiple &lt;use></text>
+    <text x="225" y="70" style="text-anchor:middle; font-size:12; font-style:italic">Multiple &lt;use> elements referencing shapes</text>
+
+    <!-- ############################### -->
+    <g style="fill:none; stroke:black;">
+
+      <use xlink:href="#poly10" x="5" y="30" fill="#f0fff0" />
+
+      <use xlink:href="#poly10" x="5" y="30" fill="#fff0f2" transform="translate(-110,250) scale(.95,.95) rotate(-45)" />
+
+      <use xlink:href="#poly10" x="5" y="30" fill="#f2f0ff" transform="translate(-60,130) scale(.9,.9) rotate(-22.5)" />
+
+      <use xlink:href="#poly10" x="5" y="30" fill="#fffafc" transform="translate(80,30) scale(.8,.8) rotate(9)" />
+
+      <use xlink:href="#wave" x="90" y="130" />
+
+      <use xlink:href="#wave" x="240" y="130" />
+
+      <use x="-75" y="50" transform="scale(0.75,0.8)" xlink:href="#wave2"/>
+
+      <use x="225" y="100" xlink:href="#wave"/>
+
+      <use x="55" y="120" xlink:href="#wave"/>
+
+      <use x="55" y="270" xlink:href="#wave"/>
+
+      <use x="75" y="120" xlink:href="#wave"/>
+
+      <use x="-15" y="80" transform="scale(0.8,0.6)" xlink:href="#wave2"/>
+
+      <use x="-15" y="580" transform="scale(0.3,0.3)" xlink:href="#wave2"/>
+
+      <use x="250" y="580" transform="scale(0.5,0.3)" xlink:href="#wave2"/>
+
+      <use x="150" y="1600" transform="scale(0.4,0.2)" xlink:href="#wave2"/>
+
+      <line x1="50" y1="280" x2="420" y2="280" />
+
+    </g>
+
+    <defs>
+      <path id="wave" d="M20,130 Q100,-140 200,130 T300,130" fill="none" stroke="#fab7e9" stroke-width="5"/>
+
+      <path id="wave2" d="M 100 300 Q 100 50 150 350 Q 200 550 250 150 Q 250 50 300 300 C 350 550 300 50 400 450 C 450 50 450 550 500 50 A 50 50 0 1 1 550 150 L 500 200 Q 500 250 500 300 C 500 350 550 300 550 400 Q 550 450 600 450 Q 650 450 650 250 Q 650 50 700 100 Q 750 150 750 300" fill="none" stroke="#7fb7f9" stroke-width="7"/>
+
+     <polygon id="poly10" points="415.45602067755493,310.25831390311475 344.6181241970323,407.75831390311475 230,445 115.38187580296776,407.75831390311475 44.54397932244507,310.25831390311475 44.54397932244504,189.74168609688527 115.38187580296771,92.24168609688527 229.99999999999997,55 344.6181241970322,92.24168609688522 415.45602067755493,189.7416860968852"/>
+
+      <g id="gr1" style="fill:orange">
+        <use xlink:href="#wave" x="20" y="20" width="80" height="80" />
+        <use xlink:href="#wave" x="40" y="40" width="80" height="80" />
+      </g>
+
+      <g id="gr2" style="fill:orange">
+        <use xlink:href="#wave" x="20" y="20" width="80" height="80" />
+        <use xlink:href="#wave" x="40" y="40" width="80" height="80" />
+      </g>
+
+    </defs>
+
+    <use xlink:href="#wave" x="90" y="280" />
+
+    <use xlink:href="#wave" x="240" y="280" />
+
+    <use xlink:href="#gr1" x="20" y="100" />
+
+    <use xlink:href="#gr2" x="20" y="300" />
+
+  </g>
+
+</svg>

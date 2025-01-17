@@ -119,7 +119,7 @@
 		<!--
 			Java version to use for compilation.
 		  -->
-		<javac.version>11</javac.version>
+		<javac.version>17</javac.version>
 
 		<!--
 			Name of the benchmark Uber-JAR to generate.

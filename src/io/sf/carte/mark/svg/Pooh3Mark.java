@@ -19,6 +19,7 @@ import java.io.StringReader;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Warmup;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
@@ -29,6 +30,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 import io.sf.carte.mark.Util;
 
 @Fork(value = 2, warmups = 2)
+@Warmup(iterations = 8)
 @Measurement(iterations = 18)
 public class Pooh3Mark {
 

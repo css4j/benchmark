@@ -10,6 +10,13 @@ First, produce the benchmarks jar file, then run the required benchmark(s):
 
 You do not need to have Gradle installed on your system (it uses the `gradlew` wrapper script).
 
+But if you just want to check that a benchmark (matched by a regular expression)
+works, run the following:
+
+```shell
+./gradlew runJmh --args <regexp>
+```
+
 ## Maven
 As a pre-requisite, you (obviously) must have Apache Maven installed.
 

@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>io.sf.carte</groupId>
 			<artifactId>echosvg-transcoder</artifactId>
-			<version>2.0-pre1</version>
+			<version>2.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -109,7 +109,7 @@
 		<!--
 			CSS4J version to use with this project.
 		  -->
-		<css4j.version>5.1</css4j.version>
+		<css4j.version>5.2</css4j.version>
 
 		<!--
 			JMH version to use with this project.

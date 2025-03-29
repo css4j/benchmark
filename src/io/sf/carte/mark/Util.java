@@ -40,12 +40,7 @@ public class Util {
 	}
 
 	private static InputStream readFilefromClasspath(final String cssFilename) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
-			@Override
-			public InputStream run() {
-				return getClass().getResourceAsStream(cssFilename);
-			}
-		});
+		return Util.class.getResourceAsStream(cssFilename);
 	}
 
 	public static String loadCompressedFilefromClasspath(final String cssFilename) {
@@ -69,16 +64,11 @@ public class Util {
 	}
 
 	private static InputStream readCompressedFilefromClasspath(final String cssFilename) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
-			@Override
-			public InputStream run() {
-				try {
-					return new GZIPInputStream(getClass().getResourceAsStream(cssFilename), 4096);
-				} catch (IOException e) {
-					return null;
-				}
-			}
-		});
+		try {
+			return new GZIPInputStream(Util.class.getResourceAsStream(cssFilename), 4096);
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 }

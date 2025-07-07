@@ -71,7 +71,8 @@ public class NSACBenchmark {
 		}
 
 		@Override
-		public void importStyle(String uri, MediaQueryList media, String defaultNamespaceURI) {
+		public void importStyle(String uri, String layerName, BooleanCondition supportsCondition,
+				MediaQueryList media, String defaultNamespaceURI) {
 			counter++;
 		}
 

@@ -36,6 +36,7 @@ dependencies {
 	implementation 'io.sf.carte:css4j:6.1'
 	implementation(group: 'io.sf.carte', name: 'css4j', version: '6.1', classifier: 'tests')
 	implementation 'io.sf.carte:css4j-dom4j:6.1'
+	implementation 'org.dom4j:dom4j:2.2.0'
 	implementation 'io.sf.carte:echosvg-transcoder:2.2'
 	implementation ('org.apache.xmlgraphics:batik-transcoder:1.19') {
 		// Already available from java.xml

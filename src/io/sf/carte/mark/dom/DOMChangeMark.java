@@ -63,7 +63,7 @@ public class DOMChangeMark {
 		if (root == null) {
 			throw new IllegalStateException("Document has no element child.");
 		}
-		//
+
 		for (int i = 0; i < 20000; i++) {
 			Element element = doc.createElement("element");
 			element.setAttribute("foo", "bar");
@@ -71,7 +71,7 @@ public class DOMChangeMark {
 			element.appendChild(text);
 			root.appendChild(element);
 		}
-		//
+
 		for (int i = 0; i < 20000; i++) {
 			Node element = root.getFirstChild();
 			root.removeChild(element);
@@ -85,7 +85,7 @@ public class DOMChangeMark {
 		if (body == null) {
 			throw new IllegalStateException("Document has no body.");
 		}
-		//
+
 		for (int i = 0; i < 20000; i++) {
 			org.jsoup.nodes.Element element = doc.createElement("element");
 			element.attr("foo", "bar");
@@ -93,9 +93,9 @@ public class DOMChangeMark {
 			element.appendChild(text);
 			body.appendChild(element);
 		}
-		//
+
 		for (int i = 0; i < 20000; i++) {
-			org.jsoup.nodes.Element element = body.child(0);
+			org.jsoup.nodes.Element element = body.firstElementChild();
 			element.remove();
 		}
 	}

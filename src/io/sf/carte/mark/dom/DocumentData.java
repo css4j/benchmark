@@ -20,6 +20,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.jsoup.Jsoup;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
@@ -55,6 +56,8 @@ public class DocumentData {
 
 	Document dom4jDoc;
 
+	org.jsoup.nodes.Document jsoupDoc;
+
 	DocumentData(String filename, boolean compressed, int minimumCount, int elementCount, String tagName,
 			int nameCount) {
 		super();
@@ -81,6 +84,7 @@ public class DocumentData {
 		jdkDoc = loadJdkDocument(documentText, entityResolver);
 		dom4jDoc = loadDOM4JDocument(documentText, entityResolver);
 		domDoc = loadDOMDocument(documentText, entityResolver);
+		jsoupDoc = loadJsoupDocument(documentText);
 	}
 
 	private static Document loadJdkDocument(String documentText, EntityResolver entityResolver) {
@@ -162,4 +166,9 @@ public class DocumentData {
 		}
 		return doc;
 	}
+
+	private static org.jsoup.nodes.Document loadJsoupDocument(String documentText) {
+		return Jsoup.parse(documentText);
+	}
+
 }

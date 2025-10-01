@@ -22,6 +22,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.jsoup.Jsoup;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
@@ -141,6 +142,14 @@ public class XMLBuildBenchmark {
 		docbuilder.setEntityResolver(entityResolver);
 		InputSource source = new InputSource(new StringReader(documentText));
 		org.dom4j.Document doc = docbuilder.read(source);
+		if (doc == null) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Benchmark
+	public void markBuildJsoup() throws IOException {
+		org.jsoup.nodes.Document doc = Jsoup.parse(documentText);
 		if (doc == null) {
 			throw new RuntimeException();
 		}

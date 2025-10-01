@@ -22,8 +22,6 @@ import io.sf.carte.mark.Util;
 @State(Scope.Benchmark)
 public class DOMDataSmall extends DocumentData {
 
-	public org.jsoup.nodes.Document jsoupDoc;
-
 	public DOMDataSmall() {
 		super("/io/sf/carte/mark/dom/xhtml1.xml", false, 1566, 713, "li", 55);
 	}

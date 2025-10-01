@@ -12,8 +12,11 @@
 package io.sf.carte.mark.dom;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.dom4j.Branch;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
@@ -115,6 +118,45 @@ public class DOMIteratorMark {
 			org.dom4j.Element child = it.next();
 			count++;
 			count = iterateDOM4JElements(child, count);
+		}
+		return count;
+	}
+
+	@Benchmark
+	public void markIteratorJsoup(DOMDataSmall data) {
+		int count = iterateJsoup(data.jsoupDoc.childNodes(), 0);
+		if (count < data.minimumCount) {
+			throw new IllegalStateException(
+					"Expected a count of at least " + data.minimumCount + " obtained " + count);
+		}
+	}
+
+	private int iterateJsoup(List<org.jsoup.nodes.Node> list, int count) {
+		if (!list.isEmpty()) {
+			Iterator<org.jsoup.nodes.Node> it = list.iterator();
+			while (it.hasNext()) {
+				count++;
+				count = iterateJsoup(it.next().childNodes(), count);
+			}
+		}
+		return count;
+	}
+
+	@Benchmark
+	public void markElementIteratorJsoup(DOMDataSmall data) {
+		int count = iterateJsoupElements(data.jsoupDoc.children(), 0);
+		if (count != data.elementCount + 3) {
+			throw new IllegalStateException(
+					"Expected a count of " + data.elementCount + ", obtained " + count);
+		}
+	}
+
+	private int iterateJsoupElements(Elements elements, int count) {
+		Iterator<Element> it = elements.iterator();
+		while (it.hasNext()) {
+			Element child = it.next();
+			count++;
+			count = iterateJsoupElements(child.children(), count);
 		}
 		return count;
 	}

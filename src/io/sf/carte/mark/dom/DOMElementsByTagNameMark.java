@@ -11,6 +11,8 @@
 
 package io.sf.carte.mark.dom;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
@@ -75,6 +77,40 @@ public class DOMElementsByTagNameMark {
 		for (DOMElement element : list) {
 			// The following test is silly but could prevent optimizations
 			if (!data.getTagName().equals(element.getNodeName())) {
+				throw new IllegalStateException();
+			}
+			count++;
+		}
+		if (count != data.nameCount) {
+			throw new IllegalStateException("Expected a count of " + data.nameCount + ", obtained " + count);
+		}
+	}
+
+	@Benchmark
+	public void markElementsByTagNameJsoup(DOMData data) {
+		int count = 0;
+		Elements list = data.jsoupDoc.getElementsByTag(data.getTagName());
+		int n = list.size();
+		for (int i = 0; i < n; i++) {
+			Element element = list.get(i);
+			// The following test is silly but could prevent optimizations
+			if (!data.getTagName().equals(element.nodeName())) {
+				throw new IllegalStateException();
+			}
+			count++;
+		}
+		if (count != data.nameCount) {
+			throw new IllegalStateException("Expected a count of " + data.nameCount + ", obtained " + count);
+		}
+	}
+
+	@Benchmark
+	public void markElementsByTagNameJsoupIt(DOMData data) {
+		int count = 0;
+		Elements list = data.jsoupDoc.getElementsByTag(data.getTagName());
+		for (Element element : list) {
+			// The following test is silly but could prevent optimizations
+			if (!data.getTagName().equals(element.nodeName())) {
 				throw new IllegalStateException();
 			}
 			count++;

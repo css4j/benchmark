@@ -21,7 +21,6 @@ import org.jsoup.Jsoup;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -38,7 +37,6 @@ import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.dom.HtmlDocumentBuilder;
 import nu.validator.htmlparser.sax.HtmlParser;
 
-@Threads(4)
 @Fork(value = 2)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 8, time = 10)

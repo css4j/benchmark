@@ -14,11 +14,9 @@ package io.sf.carte.mark.dom;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.dom.Node;
 
-@Threads(4)
 @Fork(value = 2)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)

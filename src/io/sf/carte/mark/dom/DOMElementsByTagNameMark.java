@@ -16,7 +16,6 @@ import org.jsoup.select.Elements;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -25,7 +24,6 @@ import io.sf.carte.doc.dom.DOMDocument;
 import io.sf.carte.doc.dom.DOMElement;
 import io.sf.carte.doc.dom.ElementList;
 
-@Threads(4)
 @Fork(value = 2)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)

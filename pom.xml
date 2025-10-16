@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.sf.carte</groupId>
 	<artifactId>css4j-mark</artifactId>
-	<version>0.7</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>JMH benchmark for CSS4J</name>
 	<dependencies>

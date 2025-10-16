@@ -61,7 +61,7 @@ configurations.all {
 }
 
 group = 'io.sf.carte'
-version = '0.7'
+version = '1.0'
 description = 'JMH benchmark for CSS4J and EchoSVG'
 
 java {

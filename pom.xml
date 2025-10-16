@@ -109,7 +109,7 @@
 		<!--
 			CSS4J version to use with this project.
 		  -->
-		<css4j.version>6.1</css4j.version>
+		<css4j.version>6.1.1</css4j.version>
 
 		<!--
 			JMH version to use with this project.

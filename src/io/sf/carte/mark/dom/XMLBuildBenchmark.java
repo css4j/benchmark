@@ -40,7 +40,7 @@ import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 import io.sf.carte.mark.Util;
 
 @Fork(value = 1)
-@Measurement(iterations = 16, time = 10)
+@Measurement(iterations = 8, time = 10)
 @Warmup(iterations = 6, time = 10)
 public class XMLBuildBenchmark {
 

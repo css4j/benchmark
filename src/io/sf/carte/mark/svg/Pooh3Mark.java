@@ -29,7 +29,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 import io.sf.carte.mark.Util;
 
-@Fork(value = 2, warmups = 2)
+@Fork(value = 2, warmups = 1)
 @Warmup(iterations = 8)
 @Measurement(iterations = 18)
 public class Pooh3Mark {

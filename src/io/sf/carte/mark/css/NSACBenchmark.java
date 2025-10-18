@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
 
 import io.sf.carte.doc.style.css.BooleanCondition;
@@ -27,7 +29,9 @@ import io.sf.carte.doc.style.css.nsac.ParserControl;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.mark.Util;
 
-@Warmup(iterations = 22)
+@Fork(value = 2, warmups = 1)
+@Measurement(iterations = 6)
+@Warmup(iterations = 10)
 public class NSACBenchmark {
 
 	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/mark/css/sample.css");

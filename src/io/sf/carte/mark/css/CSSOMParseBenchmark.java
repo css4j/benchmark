@@ -17,14 +17,16 @@ import java.io.StringReader;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Warmup;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.om.AbstractCSSStyleSheet;
 import io.sf.carte.doc.style.css.om.DOMCSSStyleSheetFactory;
 import io.sf.carte.mark.Util;
 
-@Fork(value = 2, warmups = 2)
-@Measurement(iterations = 18)
+@Fork(value = 2, warmups = 1)
+@Measurement(iterations = 6)
+@Warmup(iterations = 6, time = 10)
 public class CSSOMParseBenchmark {
 
 	private final static String documentText = Util.loadFilefromClasspath("/io/sf/carte/mark/css/sample.css");

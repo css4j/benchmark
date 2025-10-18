@@ -27,7 +27,7 @@ import io.sf.carte.doc.dom.DOMElement;
 import io.sf.carte.doc.dom.DOMNode;
 import io.sf.carte.doc.dom4j.XHTMLDocument;
 
-@Fork(value = 2)
+@Fork(value = 1)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)
 public class DOMIteratorSmallMark {

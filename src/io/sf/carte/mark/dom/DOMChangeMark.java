@@ -27,7 +27,7 @@ import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import io.sf.carte.doc.dom.CSSDOMImplementation;
 import io.sf.carte.doc.dom4j.XHTMLDocumentFactory;
 
-@Fork(value = 2)
+@Fork(value = 1)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)
 public class DOMChangeMark {

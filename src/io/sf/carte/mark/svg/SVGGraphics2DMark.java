@@ -32,7 +32,7 @@ import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
-@Fork(value = 2, warmups = 2)
+@Fork(value = 2, warmups = 1)
 @Measurement(iterations = 18)
 public class SVGGraphics2DMark {
 

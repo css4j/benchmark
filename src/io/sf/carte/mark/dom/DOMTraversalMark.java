@@ -23,7 +23,7 @@ import io.sf.carte.doc.dom.NodeFilter;
 import io.sf.carte.doc.dom.NodeIterator;
 import io.sf.carte.doc.dom.TreeWalker;
 
-@Fork(value = 2)
+@Fork(value = 1)
 @Measurement(iterations = 16, time = 10)
 @Warmup(iterations = 6, time = 10)
 public class DOMTraversalMark {

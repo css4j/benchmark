@@ -1,15 +1,9 @@
 /*
-
  Copyright (c) 2024-2025, contributors to EchoSVG project.
-
- Licensed under a BSD-style License. You can find the license here:
- https://css4j.github.io/LICENSE.txt
-
  */
 
-/*
- * SPDX-License-Identifier: BSD-3-Clause
- */
+// SPDX-License-Identifier: Apache-2.0
+
 package io.sf.carte.mark.svg;
 
 import java.awt.Color;

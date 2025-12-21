@@ -6,9 +6,8 @@
  https://css4j.github.io/LICENSE.txt
 
  */
-/*
- * SPDX-License-Identifier: BSD-3-Clause
- */
+
+// SPDX-License-Identifier: BSD-2-Clause OR BSD-3-Clause
 
 package io.sf.carte.mark;
 
